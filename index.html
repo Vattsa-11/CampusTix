@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusTix - Your Gateway to Campus Events</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>CampusTix</h2>
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#" onclick="showSection('home')" class="nav-link active">Home</a>
+                <a href="#" onclick="showSection('events')" class="nav-link">Events</a>
+                <a href="#" onclick="showSection('dashboard')" class="nav-link">Dashboard</a>
+                <a href="#" onclick="showSection('about')" class="nav-link">About</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="login-btn" onclick="showAuthModal()">Login</button>
+                <button class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">CampusTix</h1>
+                    <p class="hero-subtitle">Your Gateway to Campus Events</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="showSection('events')">Browse Events</button>
+                        <button class="btn btn-secondary" onclick="showSection('organizer-dashboard')">Create Event</button>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="1000">0</span>
+                        <span class="stat-label">Events Hosted</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="50">0</span>
+                        <span class="stat-label">Student Organizations</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Events -->
+            <div class="featured-events">
+                <div class="container">
+                    <h2 class="section-title">Featured Events</h2>
+                    <div class="events-carousel" id="featuredEvents">
+                        <!-- Events will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="section">
+            <div class="container">
+                <div class="events-header">
+                    <h2 class="section-title">All Events</h2>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search events..." id="searchInput">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                
+                <div class="events-content">
+                    <div class="filters-sidebar">
+                        <h3>Filters</h3>
+                        <div class="filter-group">
+                            <label>Event Type</label>
+                            <select id="typeFilter">
+                                <option value="">All Types</option>
+                                <option value="technical">Technical</option>
+                                <option value="cultural">Cultural</option>
+                                <option value="sports">Sports</option>
+                                <option value="academic">Academic</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Price Range</label>
+                            <select id="priceFilter">
+                                <option value="">All Prices</option>
+                                <option value="free">Free</option>
+                                <option value="low">₹1 - ₹100</option>
+                                <option value="medium">₹101 - ₹300</option>
+                                <option value="high">₹300+</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="events-grid" id="eventsGrid">
+                        <!-- Events will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Details Section -->
+        <section id="event-details" class="section">
+            <div class="container">
+                <div class="event-detail-content" id="eventDetailContent">
+                    <!-- Event details will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section">
+            <div class="container">
+                <div class="dashboard-content">
+                    <h2 class="section-title">My Dashboard</h2>
+                    <div class="dashboard-tabs">
+                        <button class="tab-btn active" onclick="showTab('my-tickets')">My Tickets</button>
+                        <button class="tab-btn" onclick="showTab('order-history')">Order History</button>
+                        <button class="tab-btn" onclick="showTab('profile')">Profile</button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div id="my-tickets" class="tab-pane active">
+                            <div class="tickets-grid" id="ticketsGrid">
+                                <!-- Tickets will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div id="order-history" class="tab-pane">
+                            <div class="orders-list" id="ordersList">
+                                <!-- Orders will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div id="profile" class="tab-pane">
+                            <div class="profile-card">
+                                <div class="profile-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h3>John Doe</h3>
+                                <p>Computer Science Student</p>
+                                <button class="btn btn-primary">Edit Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Organizer Dashboard Section -->
+        <section id="organizer-dashboard" class="section">
+            <div class="container">
+                <div class="organizer-content">
+                    <h2 class="section-title">Organizer Dashboard</h2>
+                    <div class="dashboard-tabs">
+                        <button class="tab-btn active" onclick="showOrganizerTab('create-event')">Create Event</button>
+                        <button class="tab-btn" onclick="showOrganizerTab('my-events')">My Events</button>
+                        <button class="tab-btn" onclick="showOrganizerTab('analytics')">Analytics</button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div id="create-event" class="tab-pane active">
+                            <form class="create-event-form" id="createEventForm">
+                                <div class="form-group">
+                                    <label>Event Title</label>
+                                    <input type="text" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea rows="4" required></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Date</label>
+                                        <input type="date" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Time</label>
+                                        <input type="time" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Venue</label>
+                                    <select required>
+                                        <option value="">Select Venue</option>
+                                        <option value="auditorium">Main Auditorium</option>
+                                        <option value="hall">Conference Hall</option>
+                                        <option value="ground">Sports Ground</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ticket Price (₹)</label>
+                                    <input type="number" min="0" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Create Event</button>
+                            </form>
+                        </div>
+                        
+                        <div id="my-events" class="tab-pane">
+                            <div class="events-management" id="organizerEvents">
+                                <!-- Organizer events will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div id="analytics" class="tab-pane">
+                            <div class="analytics-dashboard">
+                                <div class="analytics-cards">
+                                    <div class="analytics-card">
+                                        <h3>Total Sales</h3>
+                                        <p class="analytics-number">₹45,000</p>
+                                    </div>
+                                    <div class="analytics-card">
+                                        <h3>Tickets Sold</h3>
+                                        <p class="analytics-number">150</p>
+                                    </div>
+                                    <div class="analytics-card">
+                                        <h3>Active Events</h3>
+                                        <p class="analytics-number">5</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Section -->
+        <section id="success" class="section">
+            <div class="container">
+                <div class="success-content">
+                    <div class="success-animation">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2>Booking Confirmed!</h2>
+                    <p>Your tickets have been successfully booked.</p>
+                    <div class="success-actions">
+                        <button class="btn btn-primary" onclick="downloadTicket()">Download Ticket</button>
+                        <button class="btn btn-secondary" onclick="showSection('dashboard')">View My Tickets</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Auth Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="showAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="showAuthTab('signup')">Sign Up</button>
+            </div>
+            
+            <div id="login" class="auth-form active">
+                <form>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Login</button>
+                </form>
+                <div class="social-login">
+                    <button class="social-btn google">
+                        <i class="fab fa-google"></i> Continue with Google
+                    </button>
+                    <button class="social-btn facebook">
+                        <i class="fab fa-facebook"></i> Continue with Facebook
+                    </button>
+                </div>
+            </div>
+            
+            <div id="signup" class="auth-form">
+                <form>
+                    <div class="form-group">
+                        <input type="text" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <select required>
+                            <option value="">Select Role</option>
+                            <option value="student">Student</option>
+                            <option value="organizer">Event Organizer</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be populated by JavaScript -->
+        </div>
+        <div class="cart-promo">
+            <div class="form-group">
+                <input type="text" id="promoCode" placeholder="Promo code">
+                <button class="btn btn-secondary" onclick="applyPromo()">Apply</button>
+            </div>
+            <div id="promoMessage"></div>
+        </div>
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span>₹<span id="cartSubtotal">0</span></span>
+            </div>
+            <div class="summary-row" id="discountRow" style="display: none;">
+                <span>Discount:</span>
+                <span>-₹<span id="cartDiscount">0</span></span>
+            </div>
+            <div class="summary-row">
+                <span>Tax (18%):</span>
+                <span>₹<span id="cartTax">0</span></span>
+            </div>
+            <div class="summary-row total">
+                <span>Total:</span>
+                <span>₹<span id="cartTotal">0</span></span>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <button class="btn btn-primary full-width" onclick="showCheckoutModal()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content checkout-modal">
+            <span class="close" onclick="closeCheckoutModal()">&times;</span>
+            <h2>Checkout</h2>
+            
+            <div class="checkout-steps">
+                <div class="checkout-step active" id="step1">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Payment Method</div>
+                </div>
+                <div class="checkout-step" id="step2">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Confirm</div>
+                </div>
+                <div class="checkout-step" id="step3">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Complete</div>
+                </div>
+            </div>
+            
+            <div class="checkout-content">
+                <div id="payment-method-step" class="checkout-step-content active">
+                    <h3>Select Payment Method</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method" onclick="selectPaymentMethod('card')">
+                            <input type="radio" name="payment" id="card" value="card">
+                            <label for="card">
+                                <i class="fas fa-credit-card"></i>
+                                Credit/Debit Card
+                            </label>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('upi')">
+                            <input type="radio" name="payment" id="upi" value="upi">
+                            <label for="upi">
+                                <i class="fas fa-mobile-alt"></i>
+                                UPI
+                            </label>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod('wallet')">
+                            <input type="radio" name="payment" id="wallet" value="wallet">
+                            <label for="wallet">
+                                <i class="fas fa-wallet"></i>
+                                E-Wallet
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="card-details" class="payment-details">
+                        <div class="form-group">
+                            <label>Card Number</label>
+                            <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" id="cardNumber">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Expiry Date</label>
+                                <input type="text" placeholder="MM/YY" maxlength="5" id="cardExpiry">
+                            </div>
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="text" placeholder="123" maxlength="3" id="cardCvv">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Name on Card</label>
+                            <input type="text" placeholder="John Doe" id="cardName">
+                        </div>
+                    </div>
+                    
+                    <div id="upi-details" class="payment-details" style="display: none;">
+                        <div class="form-group">
+                            <label>UPI ID</label>
+                            <input type="text" placeholder="example@upi" id="upiId">
+                        </div>
+                    </div>
+                    
+                    <div id="wallet-details" class="payment-details" style="display: none;">
+                        <div class="form-group">
+                            <label>Select Wallet</label>
+                            <select id="walletType">
+                                <option value="">Select Wallet</option>
+                                <option value="paytm">Paytm</option>
+                                <option value="phonepe">PhonePe</option>
+                                <option value="amazonpay">Amazon Pay</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input type="text" placeholder="10-digit number" maxlength="10" id="walletMobile">
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="nextCheckoutStep()">Continue</button>
+                </div>
+                
+                <div id="confirm-step" class="checkout-step-content">
+                    <h3>Review Your Order</h3>
+                    <div class="order-summary" id="orderSummary">
+                        <!-- Order summary will be populated by JavaScript -->
+                    </div>
+                    
+                    <div class="payment-summary">
+                        <div class="summary-row">
+                            <span>Payment Method:</span>
+                            <span id="selectedPaymentMethod">Credit Card</span>
+                        </div>
+                    </div>
+                    
+                    <div class="checkout-actions">
+                        <button class="btn btn-secondary" onclick="prevCheckoutStep()">Back</button>
+                        <button class="btn btn-primary" onclick="processPayment()">Pay Now</button>
+                    </div>
+                </div>
+                
+                <div id="processing-step" class="checkout-step-content">
+                    <div class="processing-animation">
+                        <div class="processing-circle"></div>
+                    </div>
+                    <h3>Processing Payment</h3>
+                    <p>Please do not close this window...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CampusTix</h3>
+                    <p>Your gateway to amazing campus events</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Newsletter</h4>
+                    <div class="newsletter">
+                        <input type="email" placeholder="Your email">
+                        <button class="btn btn-primary">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CampusTix. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
